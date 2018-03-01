@@ -131,16 +131,16 @@ public class MainActivity extends AppCompatActivity implements
         // done (2) Handle GooglePlayServices exceptions
         Toast.makeText(this, getString(R.string.location_permissions_granted_message), Toast.LENGTH_LONG).show();
 
-        PlacePicker.IntentBuilder intentBuilder = new PlacePicker.IntentBuilder();
-        Intent i = null;
+
         try {
-            i = intentBuilder.build(this);
+            PlacePicker.IntentBuilder intentBuilder = new PlacePicker.IntentBuilder();
+            Intent i = intentBuilder.build(this);
             startActivityForResult(i, PLACE_PICKER_REQUEST);
         } catch (GooglePlayServicesRepairableException e) {
             e.printStackTrace();
         } catch (GooglePlayServicesNotAvailableException e) {
             e.printStackTrace();
-        } catch (Exception e){
+        } catch (Exception e) {
             e.printStackTrace();
         }
 
@@ -152,9 +152,9 @@ public class MainActivity extends AppCompatActivity implements
 
     @Override
     protected void onActivityResult(int requestCode, int resultCode, Intent data) {
-        if(requestCode == PLACE_PICKER_REQUEST){
+        if (requestCode == PLACE_PICKER_REQUEST && resultCode == RESULT_OK) {
             Place place = PlacePicker.getPlace(this, data);
-            if(place == null){
+            if (place == null) {
                 Log.i(TAG, "no selected place");
                 return;
             }
